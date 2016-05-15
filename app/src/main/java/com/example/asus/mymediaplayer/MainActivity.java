@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MediaPlayer mediaPlayer;
     private boolean b=false;
     private String uris="http://abv.cn/music/光辉岁月.mp3";
+    private int conut=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.seekTo(seekBar.getProgress());
                 b=false;
+
             }
         });
 
@@ -70,12 +72,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        boolean h=true;
+
         switch (v.getId()) {
             case R.id.start_but:
-
-                getMedia();
-
+                if(conut==1) {
+                    getMedia();
+                    conut++;
+                }
                 if ( mediaPlayer!=null) {
                 mSeekBar.setMax(mediaPlayer.getDuration());
                 //定时器

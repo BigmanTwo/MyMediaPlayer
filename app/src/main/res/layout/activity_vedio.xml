@@ -9,13 +9,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.asus.mymediaplayer.VedioActivity">
-<SurfaceView
-    android:layout_width="match_parent"
-    android:layout_height="400dp"
-    android:id="@+id/vedio_view"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/play"
-        android:text="播放"/>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <SurfaceView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:id="@+id/vedio_view">
+
+                </SurfaceView>
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/vedio_seekbar"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/play"
+                android:text="播放"/>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
