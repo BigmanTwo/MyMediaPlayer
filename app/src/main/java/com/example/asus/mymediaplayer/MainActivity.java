@@ -1,16 +1,21 @@
 package com.example.asus.mymediaplayer;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,MediaPlayer.OnPreparedListener,MediaPlayer.OnBufferingUpdateListener{
     private Button playButton,stopButton;
     private SeekBar mSeekBar;
     private MediaPlayer mediaPlayer;
@@ -25,10 +30,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         playButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);
         //第一种启动方式
-//        mediaPlayer=new MediaPlayer();
-//        mediaPlayer.setDataSource();
+        mediaPlayer=new MediaPlayer();
+        //设置流媒体
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        mediaPlayer.setOnPreparedListener(this);
+        mediaPlayer.setOnBufferingUpdateListener(this);
         //第二种实例化
-        mediaPlayer=MediaPlayer.create(this,R.raw.moon);
+//        mediaPlayer=MediaPlayer.create(this,R.raw.moon);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -46,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 b=false;
             }
         });
+
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -57,6 +67,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        try {
+            mediaPlayer.setDataSource("http://abv.cn/music/光辉岁月.mp3");
+            mediaPlayer.prepare();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         switch (v.getId()) {
             case R.id.start_but:
             if (mediaPlayer != null) {
@@ -92,5 +109,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         mediaPlayer.release();
         super.onDestroy();
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+
+    }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
     }
 }
